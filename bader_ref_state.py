@@ -143,7 +143,7 @@ no = {'no','n'}
 
 if salt_answer in yes:
     final_data = input('-input the .dat file for the simulated geometry composed of surface, electrolyte with the salt:')
-    surf_ACF = input('-input the .dat and .xyz file of the isolated surface slab:')
+    surf_ACF = input('-input the .dat file of the isolated surface slab:')
     surf_xyz = input('-input the .xyz file of the isolated surface slab:')
     mol_ACF = input('-input the .dat file of the isolated electrolyte molecule:')
     mol_xyz = input('-input the .xyz file of the isolated electrolyte molecule:')
@@ -171,7 +171,7 @@ if salt_answer in yes:
     
 elif salt_answer in no:
     final_data = input('-input the .dat file for the simulated geometry composed of surface, electrolyte without salt:')
-    surf_ACF = input('-input the .dat and .xyz file of the isolated surface slab:')
+    surf_ACF = input('-input the .dat file of the isolated surface slab:')
     surf_xyz = input('-input the .xyz file of the isolated surface slab:')
     mol_ACF = input('-input the .dat file of the isolated electrolyte molecule:')
     mol_xyz = input('-input the .xyz file of the isolated electrolyte molecule:')
