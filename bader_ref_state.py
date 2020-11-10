@@ -58,16 +58,39 @@ def make_initial_charge_dict(file_ACF, file_xyz, data_dict, component, idx):
     return data_dict[component], comp_idx
 
 def final_charge_change_dict(file_ACF, initial_data_dict, surf_idx, mol_idx, salt_idx):
+    
+    """
+    initialize the variables for use 
+    
+    """
     data_dict = {}
     ini_idx = 0 # this is for using in the for loop later
-    idx_collect = (ini_idx, surf_idx, mol_idx, salt_idx)
-    components = ('surf_slab', 'mol', 'salt')
-    final_charge_change = {}
+    
+    if salt_idx == False:
+        idx_collect = (ini_idx, surf_idx, mol_idx)
+        components = ('surf_slab', 'mol')
+    else:
+        idx_collect = (ini_idx, surf_idx, mol_idx, salt_idx)
+        components = ('surf_slab', 'mol', 'salt')
+        
+    final_charge_change = {}  
+    
+    """
+    obtain the charge distribution data of the simulated geometry
+    
+    """
     final_charge = data_handle(file_ACF) # the index starts from 1
-
+    
+    
+    """
+    calculate the charge differences and input them to a dictionary
+    
+    """
     for i in range(len(components)):
         data_dict[components[i]] = {} # create a sub dictionary
         total_diff = 0
+ 
+        print(idx_collect[i])
         for j in range(idx_collect[i],idx_collect[i+1]):
             # initial_data_dict[components[i]][j] is a set, need to sort to access the element name value, 
             element_name = sorted(initial_data_dict[components[i]][j], key=str) 
@@ -82,7 +105,7 @@ def final_charge_change_dict(file_ACF, initial_data_dict, surf_idx, mol_idx, sal
 
 
 # =============================================================================
-# system input and output 
+# example system input if using a command arguments input  
 # =============================================================================
 #
 #final_data = sys.argv[1]
@@ -108,7 +131,7 @@ def final_charge_change_dict(file_ACF, initial_data_dict, surf_idx, mol_idx, sal
     
     
 """
-
+f_out = open('charge_trans_data.txt','w')
 # =============================================================================
 #  the charge distribution for isolated components 
 # =============================================================================
@@ -159,9 +182,17 @@ elif salt_answer in no:
     
     dict_mol, mol_idx = make_initial_charge_dict(mol_ACF, mol_xyz, initial_data_dict, 'mol', surf_idx)
     
-    charge_trans, total_charge_change = final_charge_change_dict(final_data, initial_data_dict, surf_idx, mol_idx, salt_idx = None)
+    charge_trans, total_charge_change = final_charge_change_dict(final_data, initial_data_dict, surf_idx, mol_idx, salt_idx = False)
     
     print(total_charge_change)
     
-
-
+# =============================================================================
+# Write all charge transfer changes into a file 
+# =============================================================================
+for key,val in charge_trans.items():
+    f_out.write('component: {}---------------------------\n'.format(key))
+    f_out.write('idx, charge change, element\n')
+    for idx,change in val.items():
+        change = sorted(change, key=str)
+        f_out.write('{}, {}\n'.format(idx, change))
+  
