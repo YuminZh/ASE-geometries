@@ -14,3 +14,4 @@
   6. DAT file of the salt: F6LiP.dat
   7. xyz file of the salt: F6LiP.xyz
 - The program is written in a way that interface with command line inputs. The program will ask questions, the user can just type in the correct file. 
+- When run the program, the charge transfer for each component (surface, electrolyte and salt) will be printed on the screen, while the detail charge transfer of each atom will be written in a file named "charge_trans_data.txt". 
