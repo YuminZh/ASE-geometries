@@ -1,0 +1,41 @@
+from ase.io import read, write
+from ase.visualize import view 
+from ase.build import add_adsorbate
+
+surface = read('surf_atoms.traj')
+atoms = read('F6LiP_up.traj')
+
+atoms.center()
+add_adsorbate(surface, atoms,6, (6, 5),None,6)
+
+surface.center()
+
+surface.write('surf_atoms_salt.traj')
+
+
+Relax not converge, use this one. 
+
+relax(atoms, maxstep = 0.02)
+
+
+from ase.io.trajectory import Trajectory
+traj = Trajectory('example.traj')
+atoms = traj[-1]
+
+--------------
+scontrol show jobid -dd 2456461
+
+-----------------------FIX one atom position--------------
+from ase.io import read, write
+from ase.constraints import FixAtoms
+atoms = read('surf_atoms_39.traj')
+c = FixAtoms(indices=[37,38,42,40,41,43,45,44])
+atoms.set_constraint(c)
+atoms.write('fixed.traj')
+
+
+atoms = glob.glob('*.sdf')[0]
+atoms = read(atoms)
+
+surf = glob.glob('Li*.traj')[0]
+surf = read(surf)
